@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 from cvzone.HandTrackingModule import HandDetector
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 cap.set(3, 1280)
 cap.set(4, 720)
 
@@ -36,6 +36,7 @@ class SnakeGameClass:
         if self.game_over:
             cvzone.putTextRect(imgMain, "Game Over", [200, 200], scale=2, thickness=4, offset=10)
             cvzone.putTextRect(imgMain, f"Your Score: {self.score}", [200, 350], scale=2, thickness=4, offset=10)
+
         else:
             px, py = self.previousHead
             cx, cy = currentHead
@@ -83,7 +84,7 @@ class SnakeGameClass:
             cv2.polylines(imgMain, [pts], False, (0, 200, 0), 3)
             minDistance = cv2.pointPolygonTest(pts, (cx, cy), True)
 
-            if -0.1 <= minDistance <= 0.1:
+            if -0.2 <= minDistance <= 0.2:
                 self.game_over = True
                 self.points = []  # all snake points
                 self.length = []  # distance between points
@@ -91,7 +92,6 @@ class SnakeGameClass:
                 self.allowedLength = 150  # total allowed length
                 self.previousHead = 0, 0  # previous head point
                 self.randomFoodLocation()
-                self.score = 0
 
         return imgMain
 
@@ -111,3 +111,5 @@ while True:
     key = cv2.waitKey(1)
     if key == ord("r"):
         game.game_over = False
+        game.score = 0
+
