@@ -100,7 +100,6 @@ game = SnakeGameClass("python1.png")
 
 while True:
     success, img = cap.read()
-    img = cv2.flip(img, 1)
     hands, img = detector.findHands(img, flipType=False)
 
     if hands:
@@ -112,4 +111,8 @@ while True:
     if key == ord("r"):
         game.game_over = False
         game.score = 0
+    elif key == ord('q'):
+        break
+cap.release()
+cv2.destroyAllWindows()
 
